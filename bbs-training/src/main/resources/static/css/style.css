@@ -7,8 +7,8 @@
 }
 
 body {
-	background-color: #f5f5f5;
-	color: #333;
+	background: linear-gradient(to bottom, #e0f7ff 0%, #f0f8ff 50%, #e6f2ff 100%);
+		background-attachment: fixed;
 }
 
 .container {
@@ -21,7 +21,7 @@ body {
 
 /* ヘッダー */
 .header {
-	background-color: #4A90E2;
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
 	padding: 24px 30px;
 	color: white;
 	display: flex;
@@ -43,7 +43,7 @@ body {
 }
 
 .btn-search {
-	background-color: #5b9bd5;
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
 	color: white;
 	border: none;
 	padding: 10px 30px;
@@ -54,7 +54,7 @@ body {
 }
 
 .btn-search:hover {
-	background-color: #4a8cc7;
+	background: linear-gradient(135deg, #00b4e6 0%, #0066e6 100%);
 }
 
 /* 投稿フォーム */
@@ -115,7 +115,7 @@ body {
 }
 
 .btn-submit {
-	background-color: #5b9bd5;
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
 	color: white;
 	border: none;
 	padding: 12px 40px;
@@ -128,7 +128,7 @@ body {
 }
 
 .btn-submit:hover {
-	background-color: #4a8cc7;
+	background: linear-gradient(135deg, #5568d3 0%, #6a4294 100%);
 }
 
 /* 検索情報 */
@@ -233,7 +233,7 @@ body {
 
 /* 投稿ヘッダー */
 .post-header {
-	background-color: #4A90E2;
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
 	color: white;
 	padding: 14px 24px;
 	display: flex;
@@ -395,7 +395,8 @@ body {
 
 .search-dialog .form-group input[type="text"]:focus {
 	outline: none;
-	border-color: #5b9bd5;
+	border-color: #667eea;
+	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .btn-dialog-close {
