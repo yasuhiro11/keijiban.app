@@ -52,7 +52,7 @@ import com.example.bbs_training.repository.SettingsRepository;
 @Controller
 public class BbsController {
 	/**
-	 * ロガーインスタンス
+	 * ログインスタンス
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(BbsController.class);
 	/**
