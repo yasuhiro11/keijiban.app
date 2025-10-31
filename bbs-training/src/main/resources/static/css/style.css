@@ -1,0 +1,469 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #f5f5f5;
+	color: #333;
+}
+
+.container {
+	width: 90%; 
+	margin: 0 auto;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー */
+.header {
+	background-color: #4A90E2;
+	padding: 20px;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.board-title {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0 auto;
+}
+
+/* 検索セクション */
+.search-section {
+	padding: 15px 20px;
+	background-color: #f9f9f9;
+	text-align: right;
+}
+
+.btn-search {
+	background-color: #5b9bd5;
+	color: white;
+	border: none;
+	padding: 10px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s;
+}
+
+.btn-search:hover {
+	background-color: #4a8cc7;
+}
+
+/* 投稿フォーム */
+.post-form {
+	padding: 20px;
+	border-bottom: 2px solid #e0e0e0;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 500;
+	color: #555;
+}
+
+.required {
+	color: #e74c3c;
+	margin-left: 3px;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+	font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+	outline: none;
+	border-color: #5b9bd5;
+}
+
+.form-group textarea {
+	resize: vertical;
+}
+
+.emoji {
+	font-size: 30px;
+	margin: 10px 0;
+}
+
+.btn-submit {
+	background-color: #5b9bd5;
+	color: white;
+	border: none;
+	padding: 12px 40px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+	background-color: #4a8cc7;
+}
+
+/* 検索情報 */
+.search-info {
+	padding: 15px 20px;
+	background-color: #f9f9f9;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.search-label {
+	font-weight: 500;
+}
+
+.search-keyword {
+	color: #5b9bd5;
+}
+
+.link-reset {
+	color: #5b9bd5;
+	text-decoration: none;
+	margin-left: 20px;
+}
+
+.link-reset:hover {
+	text-decoration: underline;
+}
+
+/* ソート */
+.sort-pagination {
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #fafafa;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.sort-options {
+	display: flex;
+	gap: 20px;
+}
+
+.sort-options label {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+}
+
+.sort-options input[type="radio"] {
+	cursor: pointer;
+}
+
+.pagination {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.pagination a {
+	color: #5b9bd5;
+	text-decoration: none;
+	padding: 5px 10px;
+	border-radius: 3px;
+}
+
+.pagination a:hover {
+	background-color: #e8f4fc;
+}
+
+.pagination span {
+	color: #999;
+}
+
+/* 投稿一覧 */
+.posts-list {
+	padding: 0;
+}
+
+.no-posts {
+	padding: 40px;
+	text-align: center;
+	color: #999;
+	font-size: 16px;
+}
+
+.post-item {
+	border-bottom: 2px solid #4A90E2;
+	margin-top: 10px;
+	box-shadow: 5px 3px 3px #4A90E2;
+}
+
+/* エラーメッセージのスタイル */
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+/* 投稿ヘッダー */
+.post-header {
+	background-color: #4A90E2;
+	color: white;
+	padding: 10px 20px;
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	font-size: 14px;
+}
+
+.post-number {
+	font-weight: bold;
+}
+
+.post-name {
+	font-weight: bold;
+}
+
+.post-date {
+	margin-left: auto;
+}
+
+/* 投稿メッセージ */
+.post-message {
+	padding: 15px 20px;
+	background-color: white;
+	min-height: 60px;
+	line-height: 1.6;
+	font-size: 14px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+/* 投稿アクション */
+.post-actions {
+	background-color: #4A90E2;
+	padding: 12px 20px;
+	display: flex;
+	gap: 15px;
+	align-items: center;
+}
+
+.btn-good,
+.btn-bad {
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 6px 15px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 13px;
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.btn-good:hover,
+.btn-bad:hover {
+	background-color: #f0f0f0;
+}
+
+.btn-good:active,
+.btn-bad:active {
+	background-color: #e0e0e0;
+}
+
+/* もっと見るボタン */
+.load-more {
+	padding: 20px;
+	text-align: right;
+	background-color: #f9f9f9;
+}
+
+.btn-load-more {
+	background-color: white;
+	border: 2px solid #4A90E2;
+	color: #4A90E2;
+	padding: 10px 30px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.btn-load-more:hover {
+	background-color: #4A90E2;
+	color: white;
+}
+
+/*ダイアログ共通スタイル*/
+.dialog-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+	justify-content: center;
+	align-items: center;
+}
+
+.dialog-overlay.active {
+	display: flex;
+}
+
+.dialog-box {
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	max-width: 90%;
+	max-height: 90%;
+	overflow: auto;
+}
+
+.dialog-header {
+	background-color: #4A90E2;
+	color: white;
+	padding: 15px 20px;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 8px 8px 0 0;
+}
+
+.dialog-content {
+	padding: 20px;
+}
+
+.dialog-footer {
+	padding: 15px 20px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	border-top: 1px solid #e0e0e0;
+}
+
+/* 検索ダイアログ*/
+.search-dialog .dialog-box {
+	width: 500px;
+}
+
+.search-dialog .form-group {
+	margin-bottom: 0;
+}
+
+.search-dialog .form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 500;
+	color: #555;
+}
+
+.search-dialog .form-group input[type="text"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.search-dialog .form-group input[type="text"]:focus {
+	outline: none;
+	border-color: #5b9bd5;
+}
+
+.btn-dialog-close {
+	background-color: #999;
+	color: white;
+	border: none;
+	padding: 10px 25px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s;
+}
+
+.btn-dialog-close:hover {
+	background-color: #777;
+}
+
+.btn-dialog-action {
+	background-color: #5b9bd5;
+	color: white;
+	border: none;
+	padding: 10px 25px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s;
+}
+
+.btn-dialog-action:hover {
+	background-color: #4a8cc7;
+}
+
+/* ============================================
+   絵文字ダイアログ
+   ============================================ */
+.emoji-dialog .dialog-box {
+	width: 600px;
+}
+
+.emoji-grid {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	gap: 8px;
+	margin-bottom: 20px;
+}
+
+.emoji-button {
+	background: none;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	font-size: 24px;
+	padding: 8px;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+}
+
+.emoji-button:hover {
+	background-color: #f0f0f0;
+	transform: scale(1.1);
+	border-color: #5b9bd5;
+}
+
+.emoji-button:active {
+	transform: scale(0.95);
+}
+
+/* 絵文字ボタン（メッセージ入力欄の横） */
+.btn-emoji {
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 8px 16px;
+	cursor: pointer;
+	font-size: 20px;
+	transition: all 0.2s;
+}
+
+.btn-emoji:hover {
+	background-color: #f0f0f0;
+	border-color: #5b9bd5;
+}

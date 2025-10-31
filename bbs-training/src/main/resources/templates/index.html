@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>掲示板</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="style.css">
+</head>
+
+<body>
+	<div class="container">
+		<!-- ヘッダー -->
+		<header class="header">
+			<div class="board-title" th:text="${bbs != null ? bbs.title : '掲示板'}">掲示板</div>
+			<div class="admin-name">管理人名：<span th:text="${bbs != null ? bbs.administrator : '管理人'}">管理人</span>
+			</div>
+		</header>
+
+		<!-- 検索フォーム -->
+		<div class="search-section">
+			<button class="btn-search" id="searchButton">検索フォーム</button>
+		</div>
+
+		<!-- 投稿フォーム -->
+		<form id="postForm" th:action="@{/post}" th:object="${post}" method="post">
+			<div class="form-group">
+				<label>名前<span class="required">*</span></label>
+				<input type="text" id="nameInput" th:field="*{name}" placeholder="投稿者名を入力してください">
+				<!-- エラーメッセージ表示 -->
+				<span th:if="${#fields.hasErrors('name')}" class="error-message"
+					th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+			</div>
+
+			<div class="form-group">
+				<label>メッセージ<span class="required">*</span></label>
+				<textarea th:field="*{message}" id="messageInput" rows="4"></textarea>
+				<!-- エラーメッセージ表示 -->
+				<span th:if="${#fields.hasErrors('message')}" class="error-message"
+					th:each="err : ${#fields.errors('message')}" th:text="${err}"></span>
+
+			</div>
+			<button type="button" id="emojiButton" class="btn-emoji">😊</button>
+			<div class="form-group">
+				<!-- ✅ CSRFトークン（投稿ボタンの前に設置） -->
+				    <input type="hidden" name="csrfToken" th:value="${csrfToken}" />
+				<button type="submit" class="btn-submit">投稿する</button>
+			</div>
+		</form>
+
+		<!-- 検索キーワード表示 -->
+		<div class="search-info" id="searchInfo" style="display: none;">
+			<span class="search-label">検索キーワード：</span>
+			<span class="search-keyword" id="searchKeywordDisplay"></span>
+			<a href="#" class="link-reset" id="clearSearchButton">解除</a>
+		</div>
+
+		<!-- ソート -->
+		<div class="sort-pagination">
+			<div class="sort-options">
+				<label><input type="radio" name="sort" value="asc"> 昇順 </label>
+				<label><input type="radio" name="sort" value="desc" checked> 降順 </label>
+			</div>
+			<div class="pagination">
+				<!-- 前へ・先頭へ -->
+				<span th:if="${currentPage > 0}">
+					<a th:href="@{|/?page=0&keyword=${keyword != null ? keyword : ''}|}">&lt;&lt;</a>
+					<a th:href="@{|/?page=${currentPage - 1}&keyword=${keyword != null ? keyword : ''}|}">前へ</a>
+				</span>
+				<!-- ページ番号（最大5件） -->
+				<span th:each="i : ${#numbers.sequence(
+				    currentPage > 1 ? currentPage - 2 : 0,
+				    currentPage + 2 < totalPages ? currentPage + 2 : totalPages - 1)}">
+					<a th:href="@{|/?page=${i}&keyword=${keyword != null ? keyword : ''}|}" th:text="${i + 1}"
+						th:classappend="${i == currentPage} ? ' active' : ''"></a></span>
+				<!-- 次へ・最後へ -->
+				<span th:if="${currentPage < totalPages - 1}">
+					<a th:href="@{|/?page=${currentPage + 1}&keyword=${keyword != null ? keyword : ''}|}">次へ</a>
+					<a th:href="@{|/?page=${totalPages - 1}&keyword=${keyword != null ? keyword : ''}|}">&gt;&gt;</a>
+				</span>
+			</div>
+
+
+		</div>
+
+		<!-- 投稿一覧表示 -->
+		<div class="posts-list">
+			<!-- 投稿がない場合 -->
+			<div th:if="${#lists.isEmpty(postsList)}" class="no-posts">まだ投稿がありません</div>
+
+			<!-- 投稿がある場合 -->
+			<div th:each="post : ${postsList}" class="post-item">
+				<div class="post-header">
+					<span class="post-number">No.<span th:text="${post.id}">1</span></span>
+					<span class="post-name" th:text="${post.name}">投稿者名</span>
+					<span class="post-date"
+						th:text="${#temporals.format(post.createDate, 'yyyy/MM/dd HH:mm')}">2025/01/01
+						12:00</span>
+				</div>
+
+				<!-- 投稿メッセージ -->
+				<div class="post-message" th:text="${post.message}">投稿メッセージ</div>
+
+				<!-- 高評価 -->
+				<div class="post-actions">
+					<form th:action="@{/good}" method="post" style="display:inline;">
+						<input type="hidden" name="postId" th:value="${post.id}">
+						<input type="hidden" name="page" th:value="${currentPage}" />
+						<button type="submit" class="btn-good">
+							👍 <span th:text="${post.goodCount}">0</span>件
+						</button>
+					</form>
+
+					<!-- 低評価 -->
+					<form th:action="@{/bad}" method="post" style="display:inline;">
+						<input type="hidden" name="postId" th:value="${post.id}">
+						<input type="hidden" name="page" th:value="${currentPage}" />
+						<button type="submit" class="btn-bad">
+							👎 <span th:text="${post.badCount}">0</span>件
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- もっと見るリンク（3年以上前の投稿がある場合のみ表示） -->
+		<div class="load-more" th:if="${hasOlderPosts}">
+			<a class="btn-load-more" th:href="@{/bbs/history(bbsId=${bbsId})}">
+				もっと見る
+			</a>
+		</div>
+
+
+	</div>
+
+	<!-- 検索ダイアログ -->
+	<div class="dialog-overlay search-dialog" id="searchDialog">
+		<div class="dialog-box">
+			<div class="dialog-header">投稿検索</div>
+			<div class="dialog-content">
+				<div class="form-group">
+					<label>キーワード：</label>
+					<input type="text" id="searchKeywordInput" placeholder="検索キーワードを入力">
+				</div>
+			</div>
+			<div class="dialog-footer">
+				<button class="btn-dialog-close" id="closeSearchDialog">閉じる</button>
+				<button class="btn-dialog-action" id="executeSearch">検索</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 絵文字入力ダイアログ -->
+	<div class="dialog-overlay emoji-dialog" id="emojiDialog">
+		<div class="dialog-box">
+			<div class="dialog-header">絵文字選択</div>
+			<div class="dialog-content">
+				<div class="emoji-grid" id="emojiGrid">
+					<!-- 絵文字ボタンはJavaScriptで生成 -->
+				</div>
+			</div>
+			<div class="dialog-footer">
+				<button class="btn-dialog-close" id="closeEmojiDialog">閉じる</button>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/js/script.js}" src="script.js"></script>
+</body>
+
+</html>

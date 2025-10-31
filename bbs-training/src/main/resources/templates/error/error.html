@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>入力エラー</title>
+</head>
+
+<body>
+	<div class="container">
+		<h3>入力エラーが発生しました</h3>
+
+		<p>以下の内容を確認してください</p>
+
+		<div th:object="${post}">
+
+			<ul>
+				<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+				<li th:each="err : ${#fields.errors('message')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<div class="form-actions">
+			<a th:href="@{/}" class="btn-back">戻る</a>
+		</div>
+	</div>
+</body>
+
+</html>

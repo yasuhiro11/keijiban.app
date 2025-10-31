@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"com.example.bbs_training.controller","l":"BbsController"},{"l":"すべてのクラスおよびインタフェース","u":"allclasses-index.html"}];updateSearchResults();

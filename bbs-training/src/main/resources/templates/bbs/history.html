@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>掲示板 - 過去の投稿</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<div class="container">
+
+		<!-- ヘッダー -->
+		<header class="header">
+			<div class="board-title" th:text="${bbs != null} ? ${bbs.title + ' (過去の投稿)'} : '掲示板 (過去の投稿)'">
+				掲示板 (過去の投稿)
+			</div>
+			<div class="admin-name">
+				管理人名：<span th:text="${bbs != null ? bbs.administrator : '管理人'}">管理人</span>
+			</div>
+		</header>
+
+		<!-- 検索フォーム -->
+		<div class="search-section">
+			<button class="btn-search" id="searchButton">検索フォーム</button>
+		</div>
+
+		<!-- 検索キーワード表示 -->
+		<div class="search-info" id="searchInfo" style="display: none;">
+			<span class="search-label">検索キーワード：</span>
+			<span class="search-keyword" id="searchKeywordDisplay"></span>
+			<a href="#" class="link-reset" id="clearSearchButton">解除</a>
+		</div>
+
+		<!-- ソート・ページ繰り -->
+		<div class="sort-pagination">
+			<div class="sort-options">
+				<label><input type="radio" name="sort" value="asc"> 昇順 </label>
+				<label><input type="radio" name="sort" value="desc" checked> 降順 </label>
+			</div>
+			<div class="pagination">
+				<span th:if="${currentPage > 0}">
+					<a th:href="@{|/bbs/history?bbsId=${bbsId}&page=0&keyword=${keyword != null ? keyword : ''}|}">&lt;&lt;</a>
+					<a th:href="@{|/bbs/history?bbsId=${bbsId}&page=${currentPage - 1}&keyword=${keyword != null ? keyword : ''}|}">前へ</a>
+				</span>
+
+				<span th:each="i : ${#numbers.sequence(
+				    currentPage > 1 ? currentPage - 2 : 0,
+				    currentPage + 2 < totalPages ? currentPage + 2 : totalPages - 1)}">
+					<a th:href="@{|/bbs/history?bbsId=${bbsId}&page=${i}&keyword=${keyword != null ? keyword : ''}|}"
+					   th:text="${i + 1}"
+					   th:classappend="${i == currentPage} ? ' active' : ''"></a>
+				</span>
+
+				<span th:if="${currentPage < totalPages - 1}">
+					<a th:href="@{|/bbs/history?bbsId=${bbsId}&page=${currentPage + 1}&keyword=${keyword != null ? keyword : ''}|}">次へ</a>
+					<a th:href="@{|/bbs/history?bbsId=${bbsId}&page=${totalPages - 1}&keyword=${keyword != null ? keyword : ''}|}">&gt;&gt;</a>
+				</span>
+			</div>
+		</div>
+
+		<!-- 投稿一覧 -->
+		<div class="posts-list">
+			<div th:if="${#lists.isEmpty(postsList)}" class="no-posts">過去の投稿はありません</div>
+
+			<div th:each="post : ${postsList}" class="post-item">
+				<div class="post-header">
+					<span class="post-number">No.<span th:text="${post.id}">1</span></span>
+					<span class="post-name" th:text="${post.name}">投稿者名</span>
+					<span class="post-date"
+						th:text="${#temporals.format(post.createDate, 'yyyy/MM/dd HH:mm')}">2025/01/01
+						12:00</span>
+				</div>
+
+				<div class="post-message" th:text="${post.message}">投稿メッセージ</div>
+
+				<div class="post-actions">
+					<form th:action="@{/good}" method="post" style="display:inline;">
+						<input type="hidden" name="postId" th:value="${post.id}">
+						<input type="hidden" name="page" th:value="${currentPage}">
+						<button type="submit" class="btn-good">
+							👍 <span th:text="${post.goodCount}">0</span>件
+						</button>
+					</form>
+
+					<form th:action="@{/bad}" method="post" style="display:inline;">
+						<input type="hidden" name="postId" th:value="${post.id}">
+						<input type="hidden" name="page" th:value="${currentPage}">
+						<button type="submit" class="btn-bad">
+							👎 <span th:text="${post.badCount}">0</span>件
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- 最新の投稿へ -->
+		<div class="load-more">
+			<a class="btn-load-more" th:href="@{|/?bbsId=${bbsId}|}">最新の投稿へ</a>
+		</div>
+
+	</div>
+	<!-- 検索ダイアログ -->
+	<div class="dialog-overlay search-dialog" id="searchDialog">
+		<div class="dialog-box">
+			<div class="dialog-header">投稿検索</div>
+			<div class="dialog-content">
+				<div class="form-group">
+					<label>キーワード：</label>
+					<input type="text" id="searchKeywordInput" placeholder="検索キーワードを入力">
+				</div>
+			</div>
+			<div class="dialog-footer">
+				<button class="btn-dialog-close" id="closeSearchDialog">閉じる</button>
+				<button class="btn-dialog-action" id="executeSearch">検索</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 共通スクリプト -->
+	<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>
